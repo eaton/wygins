@@ -1,0 +1,54 @@
+<?php
+
+function wygins_boilerplate_schema() {
+  $schema['wygins_boilerplate'] = array (
+    'description' => 'Main storage table for boilerplate entities',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key for our table of boilerplate items',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'Title of boilerplate item',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  $schema['wygins_boilerplate_revisions'] = array (
+    'description' => 'Revisions table for boilerplate entities',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Entity id for boilerplate text items',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'vid' => array(
+        'description' => 'Boilerplate revision id',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'Title of boilerplate item',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE
+      ),
+    ),
+    'primary key' => array('vid'),
+  );
+  
+  return $schema;
+}
+
+function wygins_boilerplate_uninstall() {
+  
+}

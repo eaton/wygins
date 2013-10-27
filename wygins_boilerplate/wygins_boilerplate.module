@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * @file
+ * Provides an entity for storing and displaying boilerplate text in a node body
+ */
+
+
+/**
+ * ignore this for now...
+ /*
+      'bundles' => array(
+        'boilerplate'=> array(
+          'label' => 'Boilerplate Text',
+          'admin' => array(
+            'path' => 'admin/structure/boilerplate/manage',
+            'access arguments' => array('administer boilerplate text'),
+          ),
+        ),
+      ),
+      'view modes' => array(
+        'full' => array(
+          'label' => t('Full'),
+          'custom settings' =>  FALSE,
+        ),
+      )
+    )
+    */
+
+/**
+ * Implements hook_entity_info()
+ */
+function wygins_boilerplate_entity_info() {
+  $info = array(
+    'boilerplate' => array(
+      'label' => t('Boilerplate'),
+      'base table' => 'wygins_boilerplate',
+      'entity keys' => array(
+        'id' => 'id'
+      ),
+      'entity class' => 'WyginsBoilerplateEntity',
+      'controller class' => 'WyginsBoilerplateController',
+      'url callback' => 'entity_class_uri',
+      'admin ui' => array(
+        'path' => 'admin/content/boilerplate',
+        'controller class' => 'WyginsBoilerplateEntityUIController',
+        'menu wildcard' =>'%boilerplate'
+      ),
+      'module' => 'wygins_boilerplate'
+    )
+  );
+  return $info;
+}
+
+
+function wygins_boilerplate_menu() {
+  $items = array();
+
+  $items['boilerplate/%entity'] = array(
+    'title' => 'Boilerplate',
+    'page callback' => 'wygins_boilerplate_view',
+    'page arguments' => array(1),
+    'access callback' => TRUE
+  );
+  return $items;
+}
+
+
+function wygins_boilerplate_load($id) {
+  $boilerplate = entity_load('boilerplate', $id);
+  return array_pop($boilerplate);
+}
+
+function wygins_boilerplate_view($boilerplate) {
+  $boilerplate_entity = entity_view('boilerplate', array($boilerplate->id => $boilerplate));
+  kpr($boilerplate_entity);
+  return 'Tried to load an entity. Did it work?';
+}
+
+class WyginsBoilerplateEntity extends Entity {
+  protected function defaultURI() {
+    return array('path' => 'boilerplate/' . $this->identifier());
+  }
+}
+
+
+class WyginsBoilerplateController extends EntityAPIController {
+
+}
+
+class WyginsBoilerplateEntityUIController extends EntityDefaultUIController {
+
+}

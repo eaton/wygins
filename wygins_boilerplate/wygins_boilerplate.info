@@ -1,0 +1,5 @@
+name = Wygins Boilerplate Entity
+description = Provide a boilerplate text entity for the Wygins editing experience
+core = 7.x
+dependancies[] = entity
+files[] = wygins_boilerplate.install
